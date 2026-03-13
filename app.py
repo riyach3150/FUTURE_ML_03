@@ -102,6 +102,22 @@ def extract_skills(text):
 
     return found
 
+def get_missing_skills(resume_skills, job_description):
+
+    job_skills = []
+
+    for skill in skills_list:
+        if skill in job_description:
+            job_skills.append(skill)
+
+    missing = []
+
+    for skill in job_skills:
+        if skill not in resume_skills:
+            missing.append(skill)
+
+    return missing
+
 df["Skills"] = df["Cleaned_Resume"].apply(extract_skills)
 
 # -----------------------------
@@ -158,6 +174,10 @@ This system ranks resumes based on how well they match a **job description** usi
 
         df["Score"] = scores * 100
 
+        df["Missing_Skills"] = df["Skills"].apply(
+        lambda x: get_missing_skills(x, clean_job)
+        )
+
         ranked = df.sort_values(by="Score", ascending=False)
 
         top5 = ranked.head(5)
@@ -165,7 +185,7 @@ This system ranks resumes based on how well they match a **job description** usi
         st.subheader("🏆 Top Matching Candidates")
 
         st.dataframe(
-        top5[["Category","Skills","Score"]]
+        top5[["Category","Skills","Missing_Skills","Score"]]
         .style.format({"Score":"{:.2f}"})
         )
         # -----------------------------
