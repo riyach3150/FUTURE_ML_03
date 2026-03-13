@@ -58,7 +58,7 @@ border:1px solid #333;
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("Resume.csv")
+    df = pd.read_csv("Resume_small.csv")
     return df
 
 df = load_data()
