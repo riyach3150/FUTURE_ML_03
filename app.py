@@ -86,8 +86,10 @@ df["Cleaned_Resume"] = df["Resume_str"].apply(clean_text)
 
 skills_list = [
 'python','java','c++','machine learning','deep learning','nlp',
-'sql','tensorflow','pytorch','excel','communication','management',
-'data analysis','tableau','power bi','pandas','numpy','scikit-learn'
+'sql','tensorflow','pytorch','keras','opencv','excel',
+'communication','management','data analysis','tableau',
+'power bi','pandas','numpy','scikit-learn','data science',
+'artificial intelligence','ai','statistics','big data'
 ]
 
 def extract_skills(text):
@@ -162,8 +164,10 @@ This system ranks resumes based on how well they match a **job description** usi
 
         st.subheader("🏆 Top Matching Candidates")
 
-        st.dataframe(top5[["Category","Skills","Score"]])
-
+        st.dataframe(
+        top5[["Category","Skills","Score"]]
+        .style.format({"Score":"{:.2f}"})
+        )
         # -----------------------------
         # Visualization
         # -----------------------------
